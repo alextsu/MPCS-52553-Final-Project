@@ -1,0 +1,58 @@
+<table class="table table-striped">
+	<h1>Students</h1>
+	<tr>
+		<th>Email</th>
+		<th>University</th>
+		<th>Graduation Year</th>
+		<th>Location</th>
+		<th></th>
+	</tr>
+	<% @users.each do |user| %>
+	<tr>
+		<!--For each user, get the corresponding info. Query the database to find the name corresponding with the ids-->
+		<td><%= user.email %></td>
+		<td><%= University.find_by(:id => user.university_id).name %></td>
+		<td><%= user.graduation_year %> </td>
+		<td><%= Location.find_by(:id => user.location_id).city%></td>
+		<td><%= link_to "Edit", "/#{user.id}/edit" %></td>
+		<td><%= link_to "Delete", "/#{user.id}", :method => 'delete' %></td>
+	</tr>
+	<% end %>
+</table>
+
+<h3>Create New User</h3>
+<%= form_tag "/", :method => 'post' do %>
+	<div>
+		<label for="title">Email:</label>
+		<input size="80" name="email" id="email" >
+	</div>
+
+	<div>
+		<label>University:</label>
+		<select name="university">
+			<!--Loop through all the Universities and get each name. Later iterations will allow for inputing new University-->
+			<% @universities.each do |university| %> 
+				<option><%= university.name%></option>
+			<% end %>
+		</select>
+	</div>
+
+	<div>
+		<label for="title">Graduation Year:</label>
+		<input size="80" name="graduation_year" id="graduation_year" >
+	</div>
+
+	<div>
+		<label>Location: </label>
+		<select name="location">
+			<!--Loop through all the Locations and get each name. Later iterations will allow for inputing new Location-->
+			<% @locations.each do |location| %> 
+				<option><%= location.city%></option>
+			<% end %>
+		</select>
+	</div>
+
+<br>
+  <input type="submit" name="commit" value="Create User">
+
+<% end %>
