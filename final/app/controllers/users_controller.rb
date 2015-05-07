@@ -29,12 +29,20 @@ class UsersController < ApplicationController
   	redirect_to "/"
   end
 
+  def show
+    @user = User.find_by(id: params[:id])
+  end
 
   #Edit the parameters currently displayed
   def edit
   	@user = User.find_by(id: params[:id])
   	@universities = University.all
   	@locations = Location.all
+  end
+
+  def new
+    @universities = University.all
+    @locations = Location.all
   end
 
   #update the table based on parameters of page. Not all are implemented currently
