@@ -1,0 +1,79 @@
+<h2>Sign Up</h2>
+<h3>Create a New User Profile:</h3>
+<% if @user.errors.any? %>
+	<ul class="errors">
+		<% @user.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+		<% end %>
+ 	</ul>
+<% end %>
+
+<%= form_tag "/users", :method => 'post' do %>
+
+	<p>
+		<%= label_tag :name %>
+		<%= text_field_tag :name %>
+	</p>
+
+	<p>
+		<%= label_tag :email %>
+		<%= text_field_tag :email %>
+	</p>
+
+	<p>
+		<%= label_tag :password %>
+		<%= text_field_tag :password %>
+	</p>
+
+	<p>
+		<label>University</label>
+		<select name="university">
+			<% @universities.each do |university| %> 
+			<option><%= university.name%></option>
+			<% end %>
+		</select>
+	</p>
+
+	<p>
+		<%= label_tag :graduation_year%>
+		<%= text_field_tag :graduation_year %>
+	</p>
+
+	<p>
+		<%= label_tag :major %>
+		<%= text_field_tag :major %>
+	</p>
+
+	<p>
+		<label>Current Location </label>
+		<select name="location">
+			<% @locations.each do |location| %> 
+			<option><%= location.city%></option>
+			<% end %>
+		</select>
+	</p>
+
+	<p>
+		<label>Bio </label>
+  		<textarea name="bio" cols="80" rows="3"></textarea>
+  	</p>
+  	<p>
+  		<%= radio_button_tag(:interested_in_hosting, "hosting") %>
+  		<%= label_tag(:interested_in_hosting_yes, "Interested in hosting.") %>
+  		<%= radio_button_tag(:interested_in_hosting, "non_hosting") %>
+  		<%= label_tag(:interested_in_hosting_no, "Not interested in hosting.") %>
+  	</p>
+  	<p>
+  		<%= radio_button_tag(:interested_in_hanging_out, "hanging_out") %>
+  		<%= label_tag(:interested_in_hanging_out_yes, "Interested in hanging out.") %>
+  		<%= radio_button_tag(:interested_in_hanging_out, "not_hanging_out") %>
+  		<%= label_tag(:interested_in_hanging_out_no, "Not interested in hanging out.") %>
+  	</p>
+	<%= submit_tag "Create New Profile" %>
+
+<% end %>
+<p><%= link_to "Back to homepage", "/users" %> </p>
+
+
+
+
