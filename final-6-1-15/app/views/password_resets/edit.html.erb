@@ -1,0 +1,24 @@
+<!--
+# In accordance with the Honor Code at UChicago, 
+# I wish to specify that code in the following file was referenced or copied from a 3rd party source.
+# This source, RailsCast, provided example code on how to integrate authentication and email features into existing apps
+# "#274 Remember Me & Reset Password." RailsCasts. N.p., 11 July 2011. Web. 30 May 2015. <http://railscasts.com/episodes/274-remember-me-reset-password>.
+-->
+
+
+<!--
+Purpose: Present user with a form containing password and password confirmation. Call the update method in password_resets_controller to change the password
+-->
+
+<%= form_tag "/password_resets/#{@user.password_reset_token}", :method => 'patch' do %>
+
+<div class="field">
+	<%= label_tag :password %>
+	<%= password_field_tag :password %>
+</div>
+<div class="field">
+	<%= label_tag :password_confirmation %>
+	<%= password_field_tag :password_confirmation %>
+</div>
+<input type="submit" name="commit" value="Confirm Password Change">
+<% end %>

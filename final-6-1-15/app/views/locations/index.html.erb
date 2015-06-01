@@ -1,0 +1,45 @@
+<!--
+Purpose: Present all locations, while allowing users to show, create and search for locations.
+-->
+
+<h2> Locations </h2>
+
+<% if session["user_id"].present? %>
+<p><%= link_to "Add new location", "/locations/new" %></p>
+<% end %>
+
+<%= form_tag locations_url, :method => "get" do %>
+	<b>Search for a city:</b>
+	<%= text_field_tag :keyword %>
+  	<%= submit_tag "Search" %>
+<% end %>
+
+<h4> Cities: </h4>
+<table class="table table-striped">
+	
+	<tr>
+		<th>City</th>
+		<th>State</th>
+		<th>Number of Users</th>
+		<th>Number of Unis</th>
+		<th></th>
+	</tr>
+
+	<% @locations.each do |location| %>
+	<tr>
+		<td><%= link_to location.city, location_path(location.id) %></td>
+		<td><%= location.state %> </td>
+		<td><%= location.users.count %> </td>
+		<td><%= location.universities.count %> </td>
+	</tr>
+	<% end %>
+	
+</table>
+
+<% if @location_count >= 100 %>
+  <p>
+    <%= link_to "Next", "/locations/?page=#{@page}" %>
+  </p>
+<% end %>
+
+<p><%= link_to "Back to main page", "/" %> </p>

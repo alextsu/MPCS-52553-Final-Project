@@ -1,0 +1,66 @@
+<!--
+Purpose: Present all events available, while allowing users to show, create and search for events.
+-->
+
+<h2> Events </h2>
+
+<% if session["user_id"].present? %>
+	<p><%= link_to "Create a new event", "/events/new" %></p>
+<% end %>
+
+<% if session["user_id"].present? %>
+	<h4>You've signed up for these events:</h4>
+ 	<% EventSignup.where(user_id: session["user_id"]).pluck(:event_id).each do |event_id| %>
+ 		<% @event = Event.find_by(id: event_id) %>
+ 		<% if @event %>
+			<%= link_to "#{@event.name}", event_path(event_id) %> <br>
+		<% end %>
+	<% end %>
+<% end %>
+
+
+<%= form_tag events_url, :method => "get" do %>
+	<b>Search events by location:</b>
+	<%= text_field_tag :keyword %>
+  	<%= submit_tag "Search" %>
+<% end %>
+
+<h4> See events: </h4>
+<table class="table table-striped">
+	
+	<tr>
+		<th>Name</th>
+		<th>Location</th>
+		<th>University</th>
+		<th>Start Time</th>
+		<th>End Time</th>
+		<th>Organizer Email</th>
+		<th></th>
+	</tr>
+
+	<% @events.each do |event| %>
+	<tr>
+		<td><%= link_to event.name, event_path(event.id) %></td>
+		<td><%= link_to Location.find_by(id: event.location_id).city, location_path(event.location_id) %></td>
+		<td><%= link_to University.find_by(id: event.university_id).name, university_path(event.university_id) %></td>
+		<td><%= event.start_time %> </td>
+		<td><%= event.end_time %> </td>
+		<td><%= mail_to event.organizer_contact_email,"#{event.organizer_contact_email}"  %></td>
+		<% if User.find_by(id: session["user_id"]).present? %> 
+			<% if event.creator_id == User.find_by(id: session["user_id"]).id %>
+				<td><%= link_to "Edit", "/events/#{event.id}/edit" %></td>
+				<td><%= link_to "Delete",  event_path(event.id), :method => 'delete' %></td>
+			<% end %>
+		<% end %>
+	</tr>
+	<% end %>
+	
+</table>
+
+<% if @event_count >= 100 %>
+  <p>
+    <%= link_to "Next", "/events/?page=#{@page}" %>
+  </p>
+<% end %>
+
+<p><%= link_to "Back to home page", "/" %> </p>

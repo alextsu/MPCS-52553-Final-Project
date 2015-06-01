@@ -1,0 +1,58 @@
+<!--
+Purpose: Present image, description and list of users attending selected university. 
+-->
+
+<style>
+	img {
+		box-shadow: none; 
+	}
+	img.center {
+  		display: block;
+  		margin-left: auto;
+  		margin-right: auto;
+	}
+	div {
+    	overflow:hidden;
+	}
+</style>
+
+<h2><%= @university.name %></h2>
+
+<div>
+	<%= image_tag @university.logo_url, height: '150' %>
+</div>
+
+<br><%=@university.description%><br>
+
+<%= form_tag users_url, :method => "get" do %>
+<b>Search <%= @university.name %> users by name:</b>
+<%= text_field_tag :keyword %>
+<%= submit_tag "Search" %>
+<% end %>
+
+<h4> <%= @university.name %> Users: </h4>
+<table class="table table-striped">
+	
+	<tr>
+		<th>Name</th>
+		<th>Email</th>
+		<th>University</th>
+		<th>Graduation Year</th>
+		<th>Major</th>
+		<th>Location</th>
+		<th></th>
+	</tr>
+
+	<% @users.each do |user| %>
+	<tr>
+		<td><%= link_to user.name, user_path(user.id) %></td>
+		<td><%= mail_to user.email,"#{user.email}"  %></td>
+		<td><%= @university.name %></td>
+		<td><%= user.graduation_year %> </td>
+		<td><%= user.major %> </td>
+		<td><%= link_to Location.find_by(id: user.location_id).city, location_path(user.location_id) %></td>
+	</tr>
+	<% end %>
+	
+</table>
+<p><%= link_to "Back to universities page", "/universities" %> </p>

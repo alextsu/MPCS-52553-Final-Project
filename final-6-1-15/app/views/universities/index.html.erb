@@ -1,0 +1,46 @@
+<!--
+Purpose: Present all universities in database, while allowing users to learn more about, create and search for universities.
+-->
+
+
+<h2> Universities </h2>
+
+<% if session["user_id"].present? %>
+<p><%= link_to "Add a new university", "/universities/new" %></p>
+<% end %>
+
+<%= form_tag universities_url, :method => "get" do %>
+	<b>Search your university:</b>
+	<%= text_field_tag :keyword %>
+  	<%= submit_tag "Search" %>
+<% end %>
+
+<h4> Universities: </h4>
+<table class="table table-striped">
+	
+	<tr>
+		<th>Name</th>
+		<th>Location</th>
+		<th>User count</th>
+		<th></th>
+	</tr>
+
+	<% @universities.each do |university| %>
+
+	<tr>
+		<td><%= link_to university.name, university_path(university.id) %></td>
+		<td><%= link_to Location.find_by(id: university.location_id).city, location_path(university.location_id) %></td>
+		<td><%= university.users.count %> </td>
+	</tr>
+
+	<% end %>
+	
+</table>
+
+<% if @university_count >= 100 %>
+  <p>
+    <%= link_to "Next", "/universities/?page=#{@page}" %>
+  </p>
+<% end %>
+
+<p><%= link_to "Back to main page", "/" %> </p>

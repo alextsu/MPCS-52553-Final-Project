@@ -1,0 +1,19 @@
+<!--
+Purpose: Present labels with Event details. Allow users who are logged in to click link to edit or delete profile.
+-->
+
+<h2><%= @user.name %></h2>
+<p><b>Email:</b> <%= mail_to "#{@user.email}", @user.email %> </p>
+<p><b>University:</b> <%= link_to University.find_by(id: @user.university_id).name, university_path(@user.university_id) %> </p>
+<p><b>Graduation Year:</b> <%= @user.graduation_year %> </p>
+<p><b>Major:</b> <%= @user.major %> </p>
+<p><b>Current Location:</b> <%= link_to Location.find_by(:id => @user.location_id).city, location_path(@user.location_id) %> </p>
+<p><b>Bio:</b> <%= @user.bio %> </p>
+<p><b>Interested in hanging out:</b> <%= @user.interested_in_hanging_out %> </p>
+<p><b>Willing to host:</b> <%= @user.interested_in_hosting %> </p>
+<% if User.find_by(id: session["user_id"]).present? %> 
+	<% if @user.id == User.find_by(id: session["user_id"]).id %>
+		<p><%= link_to "Edit or delete profile", "/users/#{@user.id}/edit" %> </p>
+	<% end %>
+<% end %>
+<p><%= link_to "Back to main page", "/users" %> </p>

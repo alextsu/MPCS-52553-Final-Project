@@ -1,0 +1,59 @@
+<!--
+Purpose: Present labels with Event details. Allow users to sign up and leave events and display all attendees.
+-->
+
+<h2><%= @event.name %></h2>
+<p><b>University:</b> <%= University.find_by(:id => @event.university_id).name %> </p>
+<p><b>Location:</b> <%= Location.find_by(:id => @event.location_id).city%> </p>
+<p><b>Address:</b> <%= @event.address %> </p>
+<p><b>Start Time:</b> <%= @event.start_time%> </p>
+<p><b>End Time:</b> <%= @event.end_time%> </p>
+<p><b>Description:</b> <%= @event.description %> </p>
+<p><b>Organizer Contact Email:</b> <%= mail_to "#{@event.organizer_contact_email}", @event.organizer_contact_email %> </p>
+<p><b>Attendees Count:</b> <%= @users.count %> </p>
+
+<% if User.find_by(id: session["user_id"]).present? %> 
+	<% if @event.creator_id == User.find_by(id: session["user_id"]).id %>
+		<p><%= link_to "Edit event", "/events/#{@event.id}/edit" %></p>
+		<p><%= link_to "Delete event",  event_path(@event.id), :method => 'delete' %></p>
+	<% end %>
+<% end %>
+
+<% if session["user_id"].present? %> 
+	<% if @logged_in_user_attending %> 
+		<p><%= link_to "Leave event", "/eventsignups/#{@event.id}/", :method => 'delete'  %> </p>
+	<% else %>
+		<p><%= link_to "Sign up for event!", "/eventsignups/#{@event.id}/", :method => 'post'  %> </p>
+	<% end %>
+<% else %>
+	<p><%= link_to "You must login to sign up for events", "/login" %></p>
+<% end %>
+
+<h4 style="clear:both; margin-top: 60px"> Attendees:</h4>
+
+<table class="table table-striped">
+	
+	<tr>
+		<th>Name</th>
+		<th>Email</th>
+		<th>University</th>
+		<th>Graduation Year</th>
+		<th>Major</th>
+		<th>Location</th>
+		<th></th>
+	</tr>
+
+	<% @users.each do |user| %>
+	<tr>
+		<td><%= link_to user.name, user_path(user.id) %></td>
+		<td><%= mail_to user.email,"#{user.email}"  %></td>
+		<td><%= link_to University.find_by(id: user.university_id).name, university_path(user.university_id) %></td>
+		<td><%= user.graduation_year %> </td>
+		<td><%= user.major %> </td>
+		<td><%= link_to Location.find_by(id: user.location_id).city, location_path(user.location_id) %></td>
+	</tr>
+	<% end %>
+	
+</table>
+
+<p><%= link_to "Back to events page", "/events" %> </p>
