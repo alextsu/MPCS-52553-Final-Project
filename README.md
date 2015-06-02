@@ -15,6 +15,8 @@ Please note:
 
 3) Much of the email-to-password-reset functionality was referenced from a 3rd party source. I've demarked all files in the application that utilize code from this source. This source, RailsCast, provided example code on how to integrate authentication and email features into existing apps. "#274 Remember Me & Reset Password." RailsCasts. N.p., 11 July 2011. Web. 30 May 2015. <http://railscasts.com/episodes/274-remember-me-reset-password>.
 
+---------------
+
 Rendered user_mailer/password_reset.text.erb within layouts/mailer (0.6ms)
 
 UserMailer#password_reset: processed outbound mail in 226.2ms
