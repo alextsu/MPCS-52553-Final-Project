@@ -9,7 +9,11 @@ Partner: Matthias Meier, https://github.com/mattmeier
 Feature Choice: Forgot Password Email 
 
 Please note: 
-At present the current iteration of this web app is unable to send an actual email. However, when the user submits a request to reset password, the web app generates the email in plain text and displays it in the server log as I've demonstrated below this paragrah. The link within the email text contains the proper URL to reset the password. Also note, we have full RESTful capabilities enabled with Users and Events. We've elected to remove editing and deleting functionality for Locations and Universities intentionally, as we don't believe users should have that ability. 
+1) At present the current iteration of this web app is unable to send an actual email. However, when the user submits a request to reset password, the web app generates the email in plain text and displays it in the server log as I've demonstrated below this paragrah. The link within the email text contains the proper URL to reset the password. 
+
+2) We have full RESTful capabilities enabled with Users and Events. We've elected to remove editing and deleting functionality for Locations and Universities intentionally, as we don't believe users should have that ability. 
+
+3) Much of the email-to-password-reset functionality was referenced from a 3rd party source. I've demarked all files in the application that utilize code from this source. This source, RailsCast, provided example code on how to integrate authentication and email features into existing apps. "#274 Remember Me & Reset Password." RailsCasts. N.p., 11 July 2011. Web. 30 May 2015. <http://railscasts.com/episodes/274-remember-me-reset-password>.
 
 Rendered user_mailer/password_reset.text.erb within layouts/mailer (0.6ms)
 
