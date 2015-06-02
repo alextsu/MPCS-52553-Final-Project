@@ -9,7 +9,7 @@ Partner: Matthias Meier, https://github.com/mattmeier
 Feature Choice: Forgot Password Email 
 
 Please note: 
-At present the current iteration of this web app is unable to send an actual email. However, when the user submits a request to reset password, the web app generates the email in plain text and displays it in the server log as I've demonstrated below this paragrah. The link within the email text contains the proper URL to reset the password. 
+At present the current iteration of this web app is unable to send an actual email. However, when the user submits a request to reset password, the web app generates the email in plain text and displays it in the server log as I've demonstrated below this paragrah. The link within the email text contains the proper URL to reset the password. Also note, we have full RESTful capabilities enabled with Users and Events. We've elected to remove editing and deleting functionality for Locations and Universities intentionally, as we don't believe users should have that ability. 
 
 Rendered user_mailer/password_reset.text.erb within layouts/mailer (0.6ms)
 
